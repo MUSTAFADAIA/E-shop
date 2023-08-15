@@ -8,6 +8,8 @@ const ApiError = require("./utils/apiError");
 const mountRoutes = require("./routes");
 const cors = require('cors')
 const compression = require('compression')
+const { webhookCheckout } = require('./controller/orderController');
+
 
 
 
@@ -22,6 +24,13 @@ app.options('*', cors())
 
 //Compress all req and res for me
 app.use(compression())
+
+// Checkout webhook
+app.post(
+  '/webhook-checkout',
+  express.raw({ type: 'application/json' }),
+  webhookCheckout
+);
 
 
 //Middlewares
